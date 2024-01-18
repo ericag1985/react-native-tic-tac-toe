@@ -3,36 +3,32 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 type CellProps = {
-  player: string;
+  player: string; // Type this to "X" | "O"
+  row: number;
+  col: number;
   handleCellSelection: () => void;
 };
 
-const Cell: FC<CellProps> = ({ player, handleCellSelection }) => {
+const Cell: FC<CellProps> = ({ row, col, player, handleCellSelection }) => {
   let cellContent;
 
   switch (player) {
     case "X":
       cellContent = (
-        <FontAwesome5
-          name="times"
-          size={32}
-          color="black"
-          data-testid={`${player}-cell`}
-        />
+        <View testID={`${player}-cell`}>
+          <FontAwesome5 name="times" size={32} color="black" />
+        </View>
       );
       break;
     case "O":
       cellContent = (
-        <FontAwesome5
-          name="circle"
-          size={32}
-          color="black"
-          data-testid={`${player}-cell`}
-        />
+        <View testID={`${player}-cell`}>
+          <FontAwesome5 name="circle" size={32} color="black" />
+        </View>
       );
       break;
     default:
-      cellContent = <Text>Select</Text>;
+      cellContent = <Text testID="empty-cell">Select</Text>;
       break;
   }
 
@@ -43,7 +39,7 @@ const Cell: FC<CellProps> = ({ player, handleCellSelection }) => {
         style={({ pressed }) =>
           pressed ? [styles.pressable, styles.pressed] : styles.pressable
         }
-        data-testid="pressable-wrapper"
+        testID={`cell-${row}-${col}`}
       >
         <View>{cellContent}</View>
       </Pressable>

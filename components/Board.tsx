@@ -27,6 +27,8 @@ const Board = () => {
     return (
       <Cell
         key={`${row}-${col}`}
+        row={row}
+        col={col}
         player={grid[row][col]}
         handleCellSelection={() => handleCellPress(row, col)}
       />
@@ -135,10 +137,14 @@ const Board = () => {
 
         {results && (
           <View>
-            <Text style={styles.winningText}>
+            <Text style={styles.winningText} testID="winning-text">
               {results === "draw" ? "The game is a draw!" : `${results} wins!`}
             </Text>
-            <Button title="Reset Game" onPress={resetGame} />
+            <Button
+              title="Reset Game"
+              onPress={resetGame}
+              testID="reset-button"
+            />
           </View>
         )}
       </View>
