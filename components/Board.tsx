@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import Cell from "./Cell";
+import Cell, { Player } from "./Cell";
+
+type Results = Player | "draw";
 
 const Board = () => {
-  const [grid, setGrid] = useState<string[][]>([
+  const [grid, setGrid] = useState<Player[][]>([
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
   ]);
 
-  const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
-  const [results, setResults] = useState<string>("");
+  const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
+  const [results, setResults] = useState<Results>("");
 
   // Adds the current players mark to the cell press
   const handleCellPress = (row: number, col: number) => {
@@ -29,14 +31,14 @@ const Board = () => {
         key={`${row}-${col}`}
         row={row}
         col={col}
-        player={grid[row][col]}
+        player={grid[row][col] as Player}
         handleCellSelection={() => handleCellPress(row, col)}
       />
     );
   };
 
   // Check is there is a game result based on selected cells and winning combinations
-  const checkWinner = () => {
+  const checkWinner = (): Results => {
     const winningCombinations = [
       // Rows
       [
@@ -94,7 +96,7 @@ const Board = () => {
         grid[row1][col1] === grid[row2][col2] &&
         grid[row1][col1] === grid[row3][col3]
       ) {
-        return grid[row1][col1];
+        return grid[row1][col1] as Player;
       }
     }
 

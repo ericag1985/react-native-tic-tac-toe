@@ -2,8 +2,10 @@ import { FC } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+export type Player = "X" | "O" | "";
+
 type CellProps = {
-  player: string; // Type this to "X" | "O"
+  player: Player;
   row: number;
   col: number;
   handleCellSelection: () => void;
