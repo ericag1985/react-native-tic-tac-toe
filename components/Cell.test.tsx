@@ -1,13 +1,9 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react-native";
+import { render, userEvent } from "@testing-library/react-native";
 import Cell from "./Cell";
 
 describe("Cell Tests", () => {
   const handleCellSelectionMock = jest.fn();
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it('renders "times" icon when player is "X"', () => {
     const { getByTestId } = render(
@@ -48,7 +44,7 @@ describe("Cell Tests", () => {
     expect(getByTestId("empty-cell")).toBeOnTheScreen();
   });
 
-  it("calls handleCellSelection when pressed", () => {
+  it("calls handleCellSelection when pressed", async () => {
     const { getByTestId } = render(
       <Cell
         player="X"
@@ -58,7 +54,7 @@ describe("Cell Tests", () => {
       />
     );
 
-    fireEvent.press(getByTestId("cell-0-0"));
+    await userEvent.press(getByTestId("cell-0-0"));
     expect(handleCellSelectionMock).toHaveBeenCalled();
   });
 });
